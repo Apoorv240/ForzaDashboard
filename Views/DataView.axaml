@@ -1,0 +1,22 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:ForzaDashboard.Views">
+  <Design.PreviewWith>
+    <controls:DataView />
+  </Design.PreviewWith>
+
+  <Style Selector="controls|DataView">
+    <!-- Set Defaults -->
+    <Setter Property="Template">
+      <ControlTemplate>
+		  <StackPanel ClipToBounds="False">
+			  <!-- TemplateBinding didn't work -->
+			  <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+				  Classes="dataDisplay" Text="{Binding DataText, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"/>
+			  <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+				  Classes="dataSubHeading" Text="{Binding SubText, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}"/>
+		  </StackPanel>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+</Styles>

@@ -1,0 +1,122 @@
+<UserControl xmlns="https://github.com/avaloniaui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+			 xmlns:controls="clr-namespace:ForzaDashboard.Views"
+			 xmlns:vm="using:ForzaDashboard.ViewModels"
+             mc:Ignorable="d" d:DesignWidth="1000" d:DesignHeight="500"
+             x:Class="ForzaDashboard.Views.MainView"
+			 x:DataType="vm:MainViewViewModel"
+			 Background="Transparent">
+
+	<Design.DesignStyle>
+
+	</Design.DesignStyle>
+
+	<!-- Main Grid -->
+	<Grid ColumnDefinitions="4*,7*,1*" ShowGridLines="False">
+		<!-- Middle Column -->
+		<Grid RowDefinitions="1.5*,7*,2*" ShowGridLines="False" Grid.Column="1">
+			<!-- Header Panel -->
+			<Panel VerticalAlignment="Center" Grid.Row="0">
+				<Button Content="Config" HorizontalAlignment="Center" VerticalAlignment="Center"></Button>
+			</Panel>
+			<!-- Speedometer Panel -->
+			<Panel VerticalAlignment="Center" Grid.Row="1">
+				<Grid>
+					<Arc Height="300" Width="300"
+							StartAngle="-240" Stroke="#626e80" Opacity="0.4"
+							StrokeDashArray=".25,.25"
+							HorizontalAlignment="Center" VerticalAlignment="Top"
+							SweepAngle="300" StrokeThickness="20"/>
+					<Arc Height="300" Width="300"
+							StartAngle="-240" Stroke="#a3b7d5"
+							StrokeDashArray=".25,.25"
+							HorizontalAlignment="Center" VerticalAlignment="Top"
+							SweepAngle="{Binding RpmSweepAngle}" StrokeThickness="20"/>
+				</Grid>
+				<StackPanel VerticalAlignment="Center" ClipToBounds="False">
+					<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+								FontSize="91" Classes="dataDisplay" Text="{Binding Rpm}"/>
+					<TextBlock HorizontalAlignment="Center" VerticalAlignment="Center"
+								Classes="dataSubHeading" Opacity="1">RPM (X1000)</TextBlock>
+				</StackPanel>
+				<TextBlock HorizontalAlignment="Center" VerticalAlignment="Bottom" Margin="0,0,0,12"
+							Classes="dataDisplay" Text="{Binding Speed}"/>
+			</Panel>
+			<!-- Bottom Data Panel -->
+			<Panel VerticalAlignment="Center" Grid.Row="2">
+				<Grid ColumnDefinitions="1*,1*,1*,1*,1*" ShowGridLines="False">
+					<controls:DataView DataText="{Binding Gear}" SubText="GEAR" Grid.Column="0"></controls:DataView>
+					<controls:DataView DataText="{Binding ClutchPercentage}" SubText="CLUTCH" Grid.Column="1"></controls:DataView>
+					<controls:DataView DataText="{Binding HandBrakePercentage}" SubText="HANDBRAKE" Grid.Column="2"></controls:DataView>
+					<controls:DataView DataText="{Binding Boost}" SubText="BOOST" Grid.Column="3"></controls:DataView>
+					<controls:DataView DataText="{Binding RpmFull}" SubText="RPM" Grid.Column="4"></controls:DataView>			
+				</Grid>
+			</Panel>
+		</Grid>
+		
+		<!-- Left Column -->
+		<Grid RowDefinitions="2*,2*,0.5*,5*,6*" ShowGridLines="False" Grid.Column="0">
+			<!-- Top Data Panel -->
+			<Panel Grid.Row="0">
+				<Grid ColumnDefinitions="1*,1*,1*" ShowGridLines="False">
+					<controls:DataView DataText="{Binding LapNum}" SubText="LAP" Grid.Column="0" VerticalAlignment="Center"></controls:DataView>
+					<controls:DataView DataText="{Binding CurrentLapTime}" SubText="LAP TIME" Grid.Column="1" VerticalAlignment="Center"></controls:DataView>
+					<controls:DataView DataText="{Binding Position}" SubText="POSITION" Grid.Column="2" VerticalAlignment="Center"></controls:DataView>
+				</Grid>
+			</Panel>
+			<!-- Middle Data Panel -->
+			<Panel Grid.Row="1">
+				<Grid ColumnDefinitions="1*,1*,1*" ShowGridLines="False">
+					<controls:DataView DataText="{Binding BestLapTime}" SubText="BEST LAP" Grid.Column="0" VerticalAlignment="Center"></controls:DataView>
+					<controls:DataView DataText="{Binding LastLapTime}" SubText="LAST LAP" Grid.Column="1" VerticalAlignment="Center"></controls:DataView>
+					<controls:DataView DataText="{Binding RaceTime}" SubText="RACE TIME" Grid.Column="2" VerticalAlignment="Center"></controls:DataView>
+				</Grid>
+			</Panel>
+			<!-- Steering Panel -->
+			<Panel Grid.Row="3">
+				<Grid>
+					<Arc Height="200" Width="200"
+							StartAngle="-200" Stroke="#626e80" Opacity="0.4"
+							HorizontalAlignment="Center" VerticalAlignment="Top"
+							SweepAngle="220" StrokeThickness="20"/>
+					<!-- Start Angle of -100 is center -->
+					<Arc Height="200" Width="200"
+							StartAngle="{Binding SteerStartAngle}" Stroke="#a3b7d5"
+							HorizontalAlignment="Center" VerticalAlignment="Top"
+							SweepAngle="20" StrokeThickness="20"/>
+				</Grid>
+			</Panel>
+			<!-- Bottom Panel -->
+			<Grid ColumnDefinitions="1*,2*,1*,10*" Grid.Row="4" HorizontalAlignment="Center" ShowGridLines="False">
+				<!-- Brake Panel -->
+				<Panel Grid.Column="0" HorizontalAlignment="Right" VerticalAlignment="Center" Height="180">
+					<Border Classes="bar" Background="Transparent" Grid.Row="0"></Border>
+					<Border Classes="bar" Background="Red" Grid.Row="0" Height="{Binding BrakeHeight}"></Border>
+				</Panel>
+				<!-- Empty Panel -->
+				<Panel Grid.Column="1" Height="5" Width="5"></Panel>
+				<!-- Accelerator Panel -->
+				<Panel Grid.Column="2" HorizontalAlignment="Left" VerticalAlignment="Center" Height="180">
+					<Border Classes="bar" Background="Transparent" Grid.Row="0"></Border>
+					<Border Classes="bar" Background="Cyan" Grid.Row="0" Height="{Binding AccelHeight}"></Border>
+				</Panel>
+				
+				<!-- Tire Panel -->
+				<Panel Grid.Column="3" Width="200" HorizontalAlignment="Left">
+					<Grid RowDefinitions="1*,1*" ColumnDefinitions="1*,1*" ShowGridLines="False">
+						<Border Classes="tire" Background="{Binding TireColorFL}" Grid.Row="0" Grid.Column="0"></Border>
+						<Border Classes="tire" Background="{Binding TireColorFR}" Grid.Row="0" Grid.Column="1"></Border>
+						<Border Classes="tire" Background="{Binding TireColorBL}" Grid.Row="1" Grid.Column="0"></Border>
+						<Border Classes="tire" Background="{Binding TireColorBR}" Grid.Row="1" Grid.Column="1"></Border>
+					</Grid>
+				</Panel>
+			</Grid>
+			
+		</Grid>
+	</Grid>
+
+
+
+</UserControl>

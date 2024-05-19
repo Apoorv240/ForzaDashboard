@@ -1,0 +1,18 @@
+<Styles xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:controls="clr-namespace:ForzaDashboard.Views">
+  <Design.PreviewWith>
+    <controls:Tire />
+  </Design.PreviewWith>
+
+  <Style Selector="controls|Tire">
+    <!-- Set Defaults -->
+    <Setter Property="Template">
+      <ControlTemplate>
+		  <Border CornerRadius="5" BorderThickness="2" Background="{Binding Color, RelativeSource={RelativeSource TemplatedParent}, Mode=OneWay}" Height="80" Width="50">
+			  
+		  </Border>
+      </ControlTemplate>
+    </Setter>
+  </Style>
+</Styles>
